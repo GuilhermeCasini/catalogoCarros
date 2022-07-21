@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd" >
+
+
+    <changeSet id="1" author="guilherme">
+        <preConditions onFail="MARK_RAN" onFailMessage="tabela vendedor já existe">
+            <not>
+                <tableExists tableName="vendedor"/>
+            </not>
+        </preConditions>
+    <createTable tableName="vendedor">
+        <column name="ID" type="int">
+            <constraints nullable="false" primaryKey="true" primaryKeyName="PK_VENDEDOR"/>
+        </column>
+        <column name="NOME" type="varchar(255)"/>
+    </createTable>
+        <addAutoIncrement tableName="vendedor" columnName="id" columnDataType="int"
+                          incrementBy="1" startWith="1" />
+    </changeSet>
+    
+    <changeSet id="2" author="guilherme">
+        <preConditions onFail="MARK_RAN" onFailMessage="tabela pedido já existe">
+            <not>
+                <tableExists tableName="pedido"/>
+            </not>
+        </preConditions>
+        <createTable tableName="pedido">
+            <column name="ID" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PEDIDO"/>
+            </column>
+            <column name="DATA" type="date"/>
+<!--     falta criar o relacionamento   <column name="VENDEDORId" type="int"/>-->
+<!--            <column name="CLIENTEId" type="int"/>-->
+            <column name="valorTotal" type="float"/>
+        </createTable>
+        <addAutoIncrement tableName="pedido" columnName="id" columnDataType="int"
+                          incrementBy="1" startWith="1" />
+    </changeSet>
+
+    <changeSet id="3" author="guilherme">
+        <preConditions onFail="MARK_RAN" onFailMessage="tabela cliente já existe">
+            <not>
+                <tableExists tableName="cliente"/>
+            </not>
+        </preConditions>
+        <createTable tableName="cliente">
+            <column name="ID" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CLIENTE"/>
+            </column>
+            <column name="NOME" type="varchar(255)"/>
+            <column name="DATANASCIMENTO" type="date">
+              <constraints nullable="false"/>
+            </column>
+            <column name="ENDERECO" type="varchar(255)"/>
+        </createTable>
+        <addAutoIncrement tableName="cliente" columnName="id" columnDataType="int"
+                          incrementBy="1" startWith="1" />
+    </changeSet>
+
+</databaseChangeLog>
